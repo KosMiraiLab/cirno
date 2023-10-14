@@ -10,7 +10,7 @@ adapters = [
     { name = "mirai2", module_name = "nonebot.adapters.mirai2" }
 ]
 plugins = []
-plugin_dirs = []
+plugin_dirs = ["plugins"]
 builtin_plugins = ["echo"]
 
 [tool.poetry]
@@ -26,6 +26,8 @@ nonebot-adapter-mirai2 = "^0.0.22"
 nonebot-adapter-console = "^0.4.0"
 nonebot2 = {extras = ["websockets"], version = "^2.1.1"}
 typer = {extras = ["all"], version = "^0.9.0"}
+pillow = "^10.0.1"
+pydub = "^0.25.1"
 
 
 [tool.poetry.group.dev.dependencies]
