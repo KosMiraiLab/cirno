@@ -24,7 +24,7 @@ readme = "README.md"
 python = "^3.11"
 nonebot-adapter-mirai2 = "^0.0.22"
 nonebot-adapter-console = "^0.4.0"
-nonebot2 = {extras = ["aiohttp"], version = "^2.1.1"}
+nonebot2 = {extras = ["websockets"], version = "^2.1.1"}
 typer = {extras = ["all"], version = "^0.9.0"}
 
 
