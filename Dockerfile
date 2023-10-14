@@ -14,6 +14,8 @@ COPY --from=builder /app/ /app/
 
 COPY ./ /app/
 
+RUN apt-get update && apt-get install ffmpeg -y
+
 RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT [ "/app/entrypoint.sh" ]
