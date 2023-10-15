@@ -1,22 +1,33 @@
-FROM python:3.11 AS builder
+FROM python:3.11 AS base
 
 WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install ffmpeg libavcodec-extra libavfilter-extra -y &&\
+    apt-get autoclean &&\
+    rm -rf /var/lib/apt/lists/* &&\
+    pip install poetry &&\
+    poetry config virtualenvs.in-project true
+
+FROM base AS builder
 
 COPY poetry.lock pyproject.toml /app/
 
-RUN pip install poetry && poetry config virtualenvs.in-project true && poetry install
+RUN poetry install
 
-FROM python:3.11 AS worker
 
-WORKDIR /app
+FROM base AS dev
 
-COPY --from=builder /app/ /app/ 
+VOLUME ["/app"]
+
+FROM base AS prod
+
+COPY --from=builder /app/ /app/
 
 COPY ./ /app/
 
-RUN apt-get update && apt-get install ffmpeg -y
-
 RUN chmod +x /app/entrypoint.sh
+
 
 ENTRYPOINT [ "/app/entrypoint.sh" ]
 

@@ -1,0 +1,11 @@
+# use for dev purpose only
+version: '3'
+services:
+  cirno:
+    image: cirno
+    build: 
+      context: .
+      target: dev
+    volumes:
+      - .:/app
+
