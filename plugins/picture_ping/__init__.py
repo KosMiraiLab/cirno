@@ -1,4 +1,6 @@
 import base64
+import pathlib
+import tempfile
 
 from nonebot import get_driver
 from nonebot.adapters.mirai2 import MessageSegment
@@ -24,7 +26,9 @@ handler_set = on_command("picture_ping", rule=to_me(), block=True)
 
 @handler_set.handle()
 async def handle_hello():
-    img = Image.new(mode='RGB', color=(255, 0, 0), size=(256, 256))
-    b64_str = base64.b64encode(img.tobytes()).decode('utf-8')
-    msg = MessageSegment.image(base64=b64_str)
+    img = Image.new(mode="RGB", color=(255, 0, 0), size=(256, 256))
+    with tempfile.TemporaryDirectory() as dir:
+        img_path = pathlib.Path(dir).joinpath("color.png")
+        img.save(img_path)
+        msg = MessageSegment.image(path=str(img_path))
     await handler_set.finish(msg)
